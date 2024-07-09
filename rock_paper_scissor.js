@@ -1,55 +1,64 @@
 let humanScore = 0
 let computerScore = 0
 
-function getComputerChoice(){
-    let choices = ["rock","paper", "scissors" ]
-    let random_choice = choices[Math.floor(Math.random() * choices.length )]
-    return random_choice
-}
+let computerSelection = getComputerChoice()
 
-function getHumanChoice(){
-    let humanChoice = prompt("Choose between: rock, paper or scissors").toLowerCase()
-    return humanChoice
-}
+const rock = document.querySelector("#rock")
+const paper = document.querySelector("#paper")
+const scissors = document.querySelector("#scissors")
+const gameHistory = document.createElement("h1")
+gameHistory.textContent = ""
+
+document.body.appendChild(gameHistory)
+
+rock.addEventListener("click", () => playGame("rock", getComputerChoice()))
+paper.addEventListener("click",() => playGame("paper", getComputerChoice()))
+scissors.addEventListener("click", () => playGame("scissors", getComputerChoice()))
 
 function playGame(humanSelection, computerSelection){
     //compare computer and human choice and increment score
     if (humanSelection === computerSelection) {
-        console.log("Draw! computer chose " + computerSelection + "you chose" + humanSelection )
+        gameHistory.textContent = "Draw! computer chose " + computerSelection + " you chose " + humanSelection 
 
     } else if (humanSelection === "rock" && computerSelection === "paper") {
-        console.log("You lose! computer chose " + computerSelection + " you chose " + humanSelection)
+        gameHistory.textContent = "You lose! computer chose " + computerSelection + " you chose " + humanSelection
         computerScore += 1
 
     } else if (humanSelection === "rock" && computerSelection === "scissors") {
-        console.log("You win! computer chose " + computerSelection + " you chose " + humanSelection)
+        gameHistory.textContent = "You win! computer chose " + computerSelection + " you chose " + humanSelection
         humanScore += 1
 
     } else if (humanSelection === "paper" && computerSelection === "rock") {
-        console.log("You win! computer chose " + computerSelection + " you chose " + humanSelection)
+        gameHistory.textContent = "You win! computer chose " + computerSelection + " you chose " + humanSelection
         humanScore += 1
 
     } else if (humanSelection === "paper" && computerSelection === "scissors") {
-        console.log("You lose! computer chose " + computerSelection + " you chose " + humanSelection)
+        gameHistory.textContent = "You lose! computer chose " + computerSelection + " you chose " + humanSelection
         computerScore += 1
 
     } else if (humanSelection === "scissors" && computerSelection === "rock") {
-        console.log("You lose! computer chose " + computerSelection + " you chose " + humanSelection)
+        gameHistory.textContent = "You lose! computer chose " + computerSelection + " you chose " + humanSelection
         computerScore += 1 
 
     } else if (humanSelection === "scissors" && computerSelection === "paper") {
-        console.log("You win! computer chose " + computerSelection + " you chose " + humanSelection)
+        gameHistory.textContent = "You win! computer chose " + computerSelection + " you chose " + humanSelection
         humanScore += 1
     }
+    document.body.appendChild(gameHistory)
+    updateScoreBoard()
 }
 
-// while loop inside a function so that i can manually start it from dev console
-function startGame(){
-    while (humanScore < 5 && computerScore < 5) {
-        console.log("Your score: " + humanScore)
-        console.log("Computer score: " + computerScore)
-        let humanSelection = getHumanChoice()
-        let computerSelection = getComputerChoice()
-        playGame(humanSelection, computerSelection)
-    }
+function updateScoreBoard (){
+    const humanScoreElement = document.querySelector(".humanScore")
+    const computerScoreElement = document.querySelector(".computerScore")
+
+    humanScoreElement.textContent = `Your score: ${humanScore}`
+    computerScoreElement.textContent = `Computer score: ${computerScore}`
+
+}
+
+function getComputerChoice(){
+    let choices = ["rock","paper", "scissors" ]
+    let random_choice = choices[Math.floor(Math.random() * choices.length )]
+    return random_choice
 }
